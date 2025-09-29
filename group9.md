@@ -14,7 +14,7 @@ for (i in left_brackets) {
   right_brackets <- grep("\\]", a[i:(i+100)])   # Search for "]" within the maximum of 100 words after the "[" position
   if (length(right_brackets) > 0) {
     delete <- c(delete, i:(i + right_brackets[1] - 1))
-  }                             # If the "]" character is found, record all the positions between "[" and "]", from '[' until it is deleted until it reaches the position of ']'
+  }                            # If the "]" character is found, record all the positions between "[" and "]", from '[' until it is deleted until it reaches the position of ']'
   else {
     delete <- c(delete, i)     # If the "]" is not found, then just delete the "["
   }
