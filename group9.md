@@ -22,11 +22,9 @@ a_clean1 <- a[-unique(delete)]
 cat("Print out the first 50 words after removing '[ ]' as an example: ")  
 head(a_clean1, 50)
 
-#4(b)
+# 4(b)
 remove <- function(a_clean1) {
   keep <- rep(TRUE, length(a_clean1))  # Initialize a logical vector to indicate which words should be retained
-  
-  # 遍历每一个单词
   for (i in seq_along(a_clean1)) {
     w <- a_clean1[i]
     if (w == toupper(w) && !(w %in% c("I", "A"))) {
@@ -42,13 +40,13 @@ a_clean2 <- remove(a_clean1)
 cat("Print out the first 50 words after removing fully upper word and numbers as examples:")
 head(a_clean2, 50)
 
-#4(c)
+# 4(c)
 a_clean3 <- gsub("_", " ", a_clean2)
 a_clean4 <- gsub("-", " ", a_clean3)     #remove “ ” and “-” from words
 cat("Print out the first 50 words after removing '-' and '_' as examples:")
-head(a_clean4, 900)
+head(a_clean4,50)
 
-#4(d)
+# 4(d)
 split_punct <- function(words, marks) {
   marks_regex <- paste0("([", paste0("\\", marks, collapse=""), "])")   # Escape each punctuation with \ and join them into a regex
   words_spaced <- gsub(marks_regex, " \\1", words, perl = TRUE)         # Replace each punctuation with " punctuation" (add a space before it)
@@ -65,7 +63,7 @@ cat("Print out the first 50 words by using split_punct
     function to separate the punctuation marks as examples:")
 head(a_clean5,50)
 
-#4(f)
+# 4(f)
 a_clean6 <- tolower(a_clean5)    #Convert all letters to lowercase
 cat("Print out the first 50 words by converting all letters to lowercase. as examples:")
 head(a_clean6,50)
