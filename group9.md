@@ -6,6 +6,7 @@ a <- scan("shakespeare.txt",what="character",skip=83,nlines=196043-83,
 cat("Print first 50 words as an example: ") 
 head(a, 50)
 
+# Huixin's part
 # 4(a)
 left_brackets <- grep("\\[",a)  # Find the positions of all the "[" in a
 delete <- c()                   # A place for storing vectors that need to be deleted
