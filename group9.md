@@ -23,7 +23,7 @@ cat("The length after removing '[ ]': ", length(a_clean1), "\n")
 cat("Print out the first 50 words after removing '[ ]' as an example: ")  
 head(a_clean1, 50)
 
-#4(b)
+# 4(b)
 remove <- function(a_clean1) {                  # defined function
   keep <- rep(TRUE, length(a_clean1))           # Initialize a logical vector to indicate which words should be retained
   for (i in seq_along(a_clean1)) {
@@ -40,13 +40,13 @@ a_clean2 <- remove(a_clean1)
 cat("Print out the first 50 words after removing fully upper word and numbers as examples:")
 head(a_clean2, 50)
 
-#4(c)
+# 4(c)
 a_clean3 <- gsub("_", " ", a_clean2)
 a_clean4 <- gsub("-", " ", a_clean3)            #remove “ ” and “-” from words
 cat("Print out the first 50 words after removing '-' and '_' as examples:")
 head(a_clean4, 50)
 
-#4(d)
+# 4(d)
 split_punct <- function(words, marks) {
   marks_regex <- paste0("([", paste0("\\", marks, collapse=""), "])")    # Escape each punctuation with \ and join them into a regex
   for (m in marks) {
