@@ -156,3 +156,55 @@ next.word <- function(key, M, M1, w = rep(1, ncol(M)-1)) {
   return(ifelse(length(validtokens) > 0, sample(validtokens, 1), 1))
 }
 
+# Ruoxi's part
+select <- function(M1,b) {                    #select a single word token randomly
+validtokens <- M1[!is.na(M1)]                 #get all valid tokens (remove NA)
+punctuation <- c(".", ",", ";", ":", "!", "?")#cannot start a sentence with a punctuation
+  
+  for (i in 1:20) {                               #try to find a non-punctuation starting word multiple times
+    token <- sample(validtokens,1)                #select a tocken randomly
+    if (!b[token] %in% punctuation) return(token) #check if the corresponding word is a punctuation
+  }
+  return(match("the",b))                          #if multiple attempts fail, default to using 'the'
+}
+
+generate_sentence <- function(M,M1,b,start_word=NULL) {  #generate a sentence
+  if (is.null(start_word)) { 
+    token <- select(M1,b)                                #if no starting word is specified, randomly choose one
+  } else {
+    token <- match(tolower(start_word),b)                #if a starting word is specified, search it in the b
+    if (is.na(token)) token <- select(M1,b)              #if the word cannot be found, go back to random selection
+  }
+  
+  tokens <- c(token)                                        #starting from the starting word
+  mlag <- ncol(M)-1                                         #get the maximum memory length of the model
+  
+  repeat {
+    context <- tail(tokens, min(length(tokens), mlag))      #get currently available contextual words, but not exceeding the memory capacity of the model
+    cat("present key (context):", paste(b[context], collapse = " "), "\n")
+    next_token <- next.word(context, M, M1)                 #predict the next word
+    tokens <- c(tokens, next_token)                         #add new words to the sentence
+    if (b[next_token] == ".") break                         #if it is a period, if so, stop generating
+  }
+  
+  words <- b[tokens]                                 #convert token back to words
+  words <- words[!is.na(words)]                      #do not use NA value  
+  cat("Final Result: ")
+  sentence <- paste(words, collapse = " ")
+  sentence <- gsub(" ([,\\.;:!\\?])","\\1", sentence)#remove excess spaces before punctuation
+  cat(sentence,"\n")
+  
+  return(sentence)
+}
+
+cat("=== A Shakespeare sentence simulator===\n\n")
+
+# example 1：starting with a random word
+cat("Example 1: Random start\n")
+generate_sentence(M, token, b)
+cat("\n")
+
+# example 1：starting with “romeo”
+cat("Example 2: Start from 'romeo'\n")  
+generate_sentence(M, token, b, "romeo")
+cat("\n")
