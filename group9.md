@@ -98,3 +98,61 @@ for (j in 1:(mlag + 1)) { # to create a loop，from 1 to (mlag+1),and (mlag+1) i
   newdata <- token[startindex:endindex]# to get the words data from start index to end index
   
   M[, j] <- newdata}# to assign the words data to the Jth column of M
+
+# 7 
+#construct next.word function
+next.word <- function(key, M, M1, w = rep(1, ncol(M)-1)) {
+  
+  mlag <- ncol(M) - 1 # to calculate the order of Marcov model
+  keylength <- length(key)# to get the length of key
+  
+  if (keylength> mlag) {
+    key <- tail(key, mlag)
+    keylength <- mlag
+  } # to get the last mlag number of key if key is too long
+  
+  allcandidates <- integer(0)
+  allweights <- numeric(0)
+  
+  #Try all possible memory lengths from higher-order to lower-order
+  for (order in min(keylength, mlag):1) {# Take the last order of the key words to be the current context
+    
+    currentkey <- tail(key, order) # Calculate the start column to be matched in the M-matrix
+    
+    mc <- mlag - order + 1
+    
+    # Now construct the matching formula：
+    
+    Msur <- M[, mc:mlag, drop = FALSE] #to get the surrounding column corresponding to the current order
+    
+    ii <- colSums(!(t(Msur) == currentkey)) #to calculate the matching degree between the sample and the current context
+    
+    matchingrows <- which(ii == 0 & is.finite(ii)) #Find the complete matching sample line 
+    
+    
+    if (length(matchingrows) > 0) { # to check if there are any matching samples
+      
+      nextwords <- M[matchingrows, mlag+1] # take the token value of next word in the matching row
+      
+      validwords <- nextwords[!is.na(nextwords)] # abandon all the NA 
+      
+      #Collect candidate words and weights
+      if (length(validwords) > 0) { #Check the length 
+        
+        allcandidates <- c(allcandidates, validwords) #Add the candidate words to the list
+        
+        allweights <- c(allweights, rep(w[order], length(validwords))) #Assign the weight w to each candidate word
+      }
+    }
+  }
+  
+  #Have candidate words:randomly select one word according to the weight
+  if (length(allcandidates) > 0) {
+    return(sample(allcandidates, 1, prob = allweights))
+  }
+  
+  #If don't have candidate words: select randomly one word form text
+  validtokens <- M1[!is.na(M1)]
+  return(ifelse(length(validtokens) > 0, sample(validtokens, 1), 1))
+}
+
