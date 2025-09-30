@@ -156,7 +156,7 @@ next.word <- function(key, M, M1, w = rep(1, ncol(M)-1)) {
   return(ifelse(length(validtokens) > 0, sample(validtokens, 1), 1))
 }
 
-# Ruoxi's part
+# 8 Ruoxi's part
 select <- function(M1,b) {                    #select a single word token randomly
 validtokens <- M1[!is.na(M1)]                 #get all valid tokens (remove NA)
 punctuation <- c(".", ",", ";", ":", "!", "?")#cannot start a sentence with a punctuation
@@ -196,7 +196,7 @@ generate_sentence <- function(M,M1,b,start_word=NULL) {  #generate a sentence
   
   return(sentence)
 }
-
+# 9
 cat("=== A Shakespeare sentence simulator===\n\n")
 
 # example 1：starting with a random word
