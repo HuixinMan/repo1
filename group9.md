@@ -78,3 +78,23 @@ b <- b_all[ranks <= 1000]                                 #keep the top 1000 ran
 token <- match(a_clean6,b)                                #switch the words in a_clean6 into positions in b(ranked word list)
 cat("b:",b,"\n")           
 print(token)
+
+# Leying's part
+# 6(a)
+mlag <- 4  # to predict the next word considering the previous 4 words
+
+n <- length(token)# to calculate the length of n which needs to be the same as "a"
+
+# 6(b) 
+M <- matrix(NA, nrow = n - mlag, ncol = mlag + 1)# to generate a matrix, with (n-malag)rows, (mlag+1)columns, and initial value is NA
+
+#Fill the M matrix
+for (j in 1:(mlag + 1)) { # to create a loop，from 1 to (mlag+1),and (mlag+1) is the column of the matrix，because every column represents a unit time，so the number of loops is equal to the number of the columns
+  
+  startindex <- j # to calculate the start index 
+  
+  endindex <- j+(n-mlag-1) # to calculate the end index
+  
+  newdata <- token[startindex:endindex]# to get the words data from start index to end index
+  
+  M[, j] <- newdata}# to assign the words data to the Jth column of M
