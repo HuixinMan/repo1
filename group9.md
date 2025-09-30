@@ -68,3 +68,13 @@ head(a_clean5,50)
 a_clean6 <- tolower(a_clean5)    #Convert all letters to lowercase
 cat("Print out the first 50 words by converting all letters to lowercase. as examples:")
 head(a_clean6,50)
+
+#5 
+b_all <- unique(a_clean6)                                 #find the unique word
+token_all <- match(a_clean6,b_all)                        #match each word in the a_clean4 to its unique position in b_all
+word_counts <- tabulate(token_all,nbins = length(b_all))  #count the occurrence of each unique word
+ranks <- rank(-word_counts,ties.method = "first")         #rank each word by its frequency, higher frequency ranked higher
+b <- b_all[ranks <= 1000]                                 #keep the top 1000 ranked word
+token <- match(a_clean6,b)                                #switch the words in a_clean6 into positions in b(ranked word list)
+cat("b:",b,"\n")           
+print(token)
