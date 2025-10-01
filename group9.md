@@ -181,7 +181,7 @@ generate_sentence <- function(M,M1,b,start_word=NULL) {  #generate a sentence
   
   repeat {
     context <- tail(tokens, min(length(tokens), mlag))      #get currently available contextual words, but not exceeding the memory capacity of the model
-    cat("present key (context):", paste(b[context], collapse = " "), "\n")
+    cat("current key (context):", paste(b[context], collapse = " "), "\n")
     next_token <- next.word(context, M, M1)                 #predict the next word
     tokens <- c(tokens, next_token)                         #add new words to the sentence
     if (b[next_token] == ".") break                         #if it is a period, if so, stop generating
