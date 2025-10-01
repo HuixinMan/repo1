@@ -8,15 +8,15 @@ head(a, 50)
 
 # Huixin's part
 # 4(a)
-left_brackets <- grep("\\[",a)  # Find the positions of all the "[" in a
-delete <- c()                   # A place for storing vectors that need to be deleted
+left_brackets <- grep("\\[",a)                  # Find the positions of all the "[" in a
+delete <- c()                                   # A place for storing vectors that need to be deleted
 for (i in left_brackets) {
   right_brackets <- grep("\\]", a[i:(i+100)])   # Search for "]" within the maximum of 100 words after the "[" position
   if (length(right_brackets) > 0) {
     delete <- c(delete, i:(i + right_brackets[1] - 1))
-  }                            # If the "]" character is found, record all the positions between "[" and "]", from '[' until it is deleted until it reaches the position of ']'
+  }                                             # If the "]" character is found, record all the positions between "[" and "]", from '[' until it is deleted until it reaches the position of ']'
   else {
-    delete <- c(delete, i)     # If the "]" is not found, then just delete the "["
+    delete <- c(delete, i)                      # If the "]" is not found, then just delete the "["
   }
 }
 a_clean1 <- a[-unique(delete)]
@@ -25,14 +25,14 @@ head(a_clean1, 50)
 
 # 4(b)
 remove <- function(a_clean1) {
-  keep <- rep(TRUE, length(a_clean1))  # Initialize a logical vector to indicate which words should be retained
+  keep <- rep(TRUE, length(a_clean1))           # Initialize a logical vector to indicate which words should be retained
   for (i in seq_along(a_clean1)) {
     w <- a_clean1[i]
     if (w == toupper(w) && !(w %in% c("I", "A"))) {
-      keep[i] <- FALSE                 # If a word is all caps and not "I" or "A", delete it
+      keep[i] <- FALSE                          # If a word is all caps and not "I" or "A", delete it
     }
     if (grepl("^[0-9]+$", w)) {
-      keep[i] <- FALSE                 # If a word is only digits, delete it
+      keep[i] <- FALSE                          # If a word is only digits, delete it
     }
   }
   return(a_clean1[keep])
@@ -59,7 +59,7 @@ split_punct <- function(words, marks) {
 # 4(e)
 text <- a_clean4
 marks <- c(",", ".", ";", "!", ":", "?")
-a_clean5 <- split_punct(text, marks)           #Use split_punct function to separate the punctuation marks
+a_clean5 <- split_punct(text, marks)                        # Use split_punct function to separate the punctuation marks
 cat("Print out the first 50 words by using split_punct 
     function to separate the punctuation marks as examples:")
 head(a_clean5,50)
@@ -197,7 +197,7 @@ generate_sentence <- function(M,M1,b,start_word=NULL) {  #generate a sentence
   return(sentence)
 }
 # 9
-cat("=== A Shakespeare sentence simulator===\n\n")
+cat(" A Shakespeare sentence simulator \n")
 
 # example 1：starting with a random word
 cat("Example 1: Random start\n")
