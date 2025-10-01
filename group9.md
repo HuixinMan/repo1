@@ -1,5 +1,14 @@
+# Huixin Man s2809410
+# Ruoxi Wang s2793485
+# Leying Wang s2829716
+# Our group's division of labor is as follows: 
+# Huixin is responsible for step 4,and finally packages the file and submits it. Her overall contribution ratio is 36%.
+# Ruoxi is responsible for step 5, 8, and 9, and the overall contribution ratio is 32%.
+# Leying is responsible for step 6 and 7, and the overall contribution ratio is 32%.
+
 # 2
-setwd("/Users/manhuixin/Desktop/UoE课程资料/sem1/statistical programming/project1")
+#setwd("/Users/manhuixin/Desktop/UoE课程资料/sem1/statistical programming/project1")
+
 # 3
 a <- scan("shakespeare.txt",what="character",skip=83,nlines=196043-83,
           fileEncoding="UTF-8")
